@@ -5,7 +5,6 @@ function GameLoop () {
 
 GameLoop.prototype.tick = function (dt) {
   this.eleapsedTime += dt;
-  console.log(this.eleapsedTime);
   if (this.isRunning) {
     window.requestAnimationFrame(this.tick.bind(this));
   }
