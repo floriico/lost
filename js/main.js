@@ -1,7 +1,8 @@
-(function () {
-  var canvas = document.querySelector('canvas');
-  var ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = '#123';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-})();
+[
+  'GameLoop',
+  'init'
+].forEach(function (mod) {
+  var script = document.createElement('script');
+  script.src = 'js/' + mod + '.js';
+  document.body.append(script);
+});
