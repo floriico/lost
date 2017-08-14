@@ -1,4 +1,5 @@
 [
+  'WorldMap',
   'GameLoop',
   'init'
 ].forEach(function (mod) {
