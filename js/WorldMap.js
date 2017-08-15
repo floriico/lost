@@ -28,7 +28,6 @@ WorldMap.prototype.generateMountains = function () {
       this.tiles[index].height = 9;
       stack.push(index);
     }, this);
-  console.log(this.tiles);
   tileId = stack.pop();
   while (tileId) {
     var height = this.tiles[tileId].height - 1;
