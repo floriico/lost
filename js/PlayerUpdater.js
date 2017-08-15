@@ -41,7 +41,7 @@ PlayerUpdater.prototype.validateMove = function (x, y) {
   } else {
     tileX = Math.floor(x / this.worldMap.tileSize);
     tileY = Math.floor(y / this.worldMap.tileSize);
-    if (worldMap.tiles[tileX + tileY * this.worldMap.width].height === 0) {
+    if (worldMap.tiles[tileX + tileY * this.worldMap.width].height <= 1) {
       isValide = false;
     }
   }
