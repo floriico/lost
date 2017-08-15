@@ -4,6 +4,7 @@ function WorldMap (width, height) {
   this.width = width;
   this.height = height;
   this.size = width * height;
+  this.tileSize = 16;
   this.tiles = new Array(this.size);
   i = this.size;
   while (i-- > 0) { this.tiles[i] = { height: 0 }; }

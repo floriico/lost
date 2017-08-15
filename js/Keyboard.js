@@ -1,5 +1,5 @@
 function Keyboard (options) {
-  this.keyDowns = {
+  this.keys = {
     up: false,
     down: false,
     left: false,
@@ -11,21 +11,21 @@ function Keyboard (options) {
 }
 
 Keyboard.prototype.onKeyUp = function (ev) {
-  this.updateKey(ev.keyCode, true);
+  this.updateKey(ev.keyCode, false);
 };
 
 Keyboard.prototype.onKeyDown = function (ev) {
-  this.updateKey(ev.keyCode, false);
+  this.updateKey(ev.keyCode, true);
 };
 
 Keyboard.prototype.updateKey = function (keyCode, value) {
   if (keyCode === 38 || keyCode === 87 || keyCode === 90) {
-    this.keyDowns.up = value;
+    this.keys.up = value;
   } else if (keyCode === 40 || keyCode === 83) {
-    this.keyDowns.down = value;
+    this.keys.down = value;
   } else if (keyCode === 39 || keyCode === 68) {
-    this.keyDowns.right = value;
+    this.keys.right = value;
   } else if (keyCode === 37 || keyCode === 65 || keyCode === 81) {
-    this.keyDowns.left = value;
+    this.keys.left = value;
   }
 };

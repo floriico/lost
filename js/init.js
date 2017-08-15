@@ -5,7 +5,11 @@ var player = new Player();
 var playerRenderer = new PlayerRenderer({ player, canvas });
 var worldMap = new WorldMap(50, 37);
 var worldMapRenderer = new WorldMapRenderer({ worldMap, canvas, player });
+var playerUpdater = new PlayerUpdater({ player, keyboard, worldMap });
 var loop = new GameLoop({
+  updatePipeline: [
+    playerUpdater
+  ],
   renderPipeline: [
     worldMapRenderer,
     playerRenderer
