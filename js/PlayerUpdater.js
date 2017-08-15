@@ -32,10 +32,18 @@ PlayerUpdater.prototype.update = function () {
 
 PlayerUpdater.prototype.validateMove = function (x, y) {
   var isValide = true;
+  var tileX;
+  var tileY;
 
   if ((x < 0) || (x > (this.worldMap.width * this.worldMap.tileSize)) ||
       (y < 0) || (y > (this.worldMap.height * this.worldMap.tileSize))) {
     isValide = false;
+  } else {
+    tileX = Math.floor(x / this.worldMap.tileSize);
+    tileY = Math.floor(y / this.worldMap.tileSize);
+    if (worldMap.tiles[tileX + tileY * this.worldMap.width].height === 0) {
+      isValide = false;
+    }
   }
   return isValide;
 };
