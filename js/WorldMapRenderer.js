@@ -1,5 +1,6 @@
 function WorldMapRenderer (options) {
   this.worldMap = options.worldMap;
+  this.sprites = options.sprites;
   this.player = options.player;
   this.canvas = options.canvas;
 }
@@ -17,9 +18,10 @@ WorldMapRenderer.prototype.render = function () {
   var tileY;
   var pixelOffsetX = this.player.x % this.worldMap.tileSize;
   var pixelOffsetY = this.player.y % this.worldMap.tileSize;
+  var spriteOffset;
   var i;
 
-  ctx.fillStyle = '#55a';
+  ctx.fillStyle = Colors.darkBlue;
   ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   for (i = 0; i < len; i++) {
     tileX = i % tileWidth;
@@ -29,9 +31,30 @@ WorldMapRenderer.prototype.render = function () {
       tileIndex = tileX + tileOffsetX + (tileY + tileOffsetY) * this.worldMap.width;
       if (tileIndex >= 0 && tileIndex < this.worldMap.size) {
         tile = this.worldMap.tiles[tileIndex];
-        ctx.fillStyle = '#5' + (tile.height + 5).toString(16) + 'a';
-        ctx.fillRect(tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY,
-            this.worldMap.tileSize, this.worldMap.tileSize);
+        if (tile.height === 0) {
+          spriteOffset = this.sprites.ids.deepOcean.offset;
+        } else if (tile.height === 1) {
+          spriteOffset = this.sprites.ids.ocean.offset;
+        } else if (tile.height === 2) {
+          spriteOffset = this.sprites.ids.coast.offset;
+        } else if (tile.height === 3) {
+          spriteOffset = this.sprites.ids.wetSand.offset;
+        } else if (tile.height === 4) {
+          spriteOffset = this.sprites.ids.sand.offset;
+        } else if (tile.height === 5) {
+          spriteOffset = this.sprites.ids.grass.offset;
+        } else if (tile.height === 6) {
+          spriteOffset = this.sprites.ids.forest.offset;
+        } else if (tile.height === 7) {
+          spriteOffset = this.sprites.ids.dirtGrass.offset;
+        } else if (tile.height === 8) {
+          spriteOffset = this.sprites.ids.dirtStone.offset;
+        } else if (tile.height === 9) {
+          spriteOffset = this.sprites.ids.stone.offset;
+        }
+        ctx.drawImage(this.sprites.spriteSheet, spriteOffset, 0, 16, 16,
+            tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
+
       }
     }
   }
