@@ -1,5 +1,6 @@
 var canvas = document.querySelector('canvas');
 var context2d = canvas.getContext('2d');
+var keyboard = new Keyboard({ element: document.body });
 var player = new Player();
 var playerRenderer = new PlayerRenderer({ player, canvas });
 var worldMap = new WorldMap(50, 37);
