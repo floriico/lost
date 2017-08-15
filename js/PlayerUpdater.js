@@ -9,16 +9,16 @@ PlayerUpdater.prototype.update = function () {
   var destY;
 
   if (this.keyboard.keys.up) {
-    this.player.velocityY = -0.5;
+    this.player.velocityY = -1;
   } else if (this.keyboard.keys.down) {
-    this.player.velocityY = 0.5;
+    this.player.velocityY = 1;
   } else {
     this.player.velocityY = 0;
   }
   if (this.keyboard.keys.right) {
-    this.player.velocityX = 0.5;
+    this.player.velocityX = 1;
   } else if (this.keyboard.keys.left) {
-    this.player.velocityX = -0.5;
+    this.player.velocityX = -1;
   } else {
     this.player.velocityX = 0;
   }
