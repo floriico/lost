@@ -6,14 +6,15 @@ function WorldMap (width, height) {
   this.size = width * height;
   this.tiles = new Array(this.size);
   i = this.size;
-  while (i--) { this.tiles[i] = { height: 0 }; }
+  while (i-- > 0) { this.tiles[i] = { height: 0 }; }
 }
 
 WorldMap.prototype.generateMountains = function () {
   var stack = [];
   var tileId;
+  var mountains = new Array(Math.floor(this.size * 0.015));
 
-  [1, 2, 3, 4, 5, 6, 7, 8] // 8 mountains
+  mountains.fill({})
     .map(function () {
       return {
         x: Math.floor(Math.random() * (this.width / 2) + this.width / 4),
@@ -46,5 +47,39 @@ WorldMap.prototype.generateMountains = function () {
       }
     }, this);
     tileId = stack.pop();
+  }
+};
+
+WorldMap.prototype.erode = function (steps) {
+  while (steps-- > 0) {
+    this.tiles.forEach(function (tile, index) {
+      var that = this;
+      var score = [ index - 1,
+        index + 1,
+        index - this.width,
+        index + this.width,
+        index - this.width - 1,
+        index - this.width + 1,
+        index + this.width - 1,
+        index + this.width + 1
+      ].reduce(function (total, index) {
+        var diff;
+
+        if ((index >= 0) && (index < that.size)) {
+          diff = tile.height - that.tiles[index].height;
+          if (diff > 0) {
+            total -= 1;
+          } else if (diff < 0) {
+            total += 1;
+          }
+        }
+        return total;
+      }, 0);
+      if (score < -2 && tile.height > 0) {
+        tile.height -= 1;
+      } else if (score > 4 && tile.height < 9) {
+        tile.height += 1;
+      }
+    }, this);
   }
 };

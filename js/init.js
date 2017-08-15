@@ -5,5 +5,6 @@ var worldMapRenderer = new WorldMapRenderer(worldMap, context2d);
 var loop = new GameLoop();
 
 worldMap.generateMountains();
+worldMap.erode(2);
 worldMapRenderer.render();
 loop.start();
