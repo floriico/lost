@@ -83,3 +83,13 @@ WorldMap.prototype.erode = function (steps) {
     }, this);
   }
 };
+
+WorldMap.prototype.generateTrees = function () {
+  this.tiles
+      .filter(function (tile) {
+        return tile.height === 7;
+      })
+      .forEach(function (tile) {
+        if (Math.random() > 0.7) { tile.tree = 'appleTree'; }
+      });
+}

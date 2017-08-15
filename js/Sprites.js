@@ -10,6 +10,7 @@ function Sprites() {
      dirtGrass: { offset: 112 },
      dirtStone: { offset: 128 },
      stone: { offset: 144 },
+     appleTree: { offset: 160 }
   };
   this.spriteSheet = document.createElement('canvas');
   this.spriteSheet.width = 16 * Object.keys(this.ids).length;
@@ -28,6 +29,7 @@ Sprites.prototype.generate = function () {
   this.generateDirtGrass();
   this.generateDirtStone();
   this.generateStone();
+  this.generateAppleTree();
 };
 
 Sprites.prototype.generateDeepOcean = function () {
@@ -93,4 +95,25 @@ Sprites.prototype.generateMixedColor = function (offset, color1, color2) {
     ctx.lineTo(offset + 16, 16 - i);
   }
   ctx.stroke();
+};
+
+Sprites.prototype.generateAppleTree = function () {
+  var ctx = this.context2d;
+  var angle;
+  var dist;
+  var i, x, y;
+
+  [ { color: Colors.darkGreen, steps: 300 },
+    { color: Colors.green, steps: 150 },
+    { color: Colors.red, steps: 10 },
+  ].forEach(function (config) {
+    ctx.fillStyle = config.color;
+    for (i = 0; i < config.steps; i++) {
+      angle = Math.random() * Math.PI * 2;
+      dist = Math.floor(Math.random() * 7);
+      x = this.ids.appleTree.offset + 8 +Math.floor(Math.cos(angle) * dist);
+      y = 8 + Math.floor(Math.sin(angle) * dist);
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }, this);
 };

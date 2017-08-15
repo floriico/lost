@@ -52,9 +52,13 @@ WorldMapRenderer.prototype.render = function () {
         } else if (tile.height === 9) {
           spriteOffset = this.sprites.ids.stone.offset;
         }
+
         ctx.drawImage(this.sprites.spriteSheet, spriteOffset, 0, 16, 16,
             tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
-
+        if (tile.tree) {
+          ctx.drawImage(this.sprites.spriteSheet, this.sprites.ids.appleTree.offset, 0, 16, 16,
+              tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
+        }
       }
     }
   }
