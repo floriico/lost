@@ -23,7 +23,7 @@ WorldMapRenderer.prototype.render = function () {
       if (tileIndex >= 0 && tileIndex < this.worldMap.size) {
         tile = this.worldMap.tiles[tileIndex];
         ctx.fillStyle = '#5' + (tile.height + 5).toString(16) + 'a';
-        ctx.fillRect(x * 16, y * 16, x * 16 + 16, y * 16 + 16);
+        ctx.fillRect(x * 16, y * 16, 16, 16);
       }
     }
   }
