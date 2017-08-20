@@ -53,11 +53,16 @@ WorldMapRenderer.prototype.render = function () {
           spriteOffset = this.sprites.ids.stone.offset;
         }
 
-        ctx.drawImage(this.sprites.spriteSheet, spriteOffset, 0, 16, 16,
+        ctx.drawImage(this.sprites.spriteSheet, spriteOffset.x, spriteOffset.y, 16, 16,
             tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
-        if (tile.tree) {
-          ctx.drawImage(this.sprites.spriteSheet, this.sprites.ids.appleTree.offset, 0, 16, 16,
+        if (tile.berryBush) {
+          ctx.drawImage(this.sprites.spriteSheet,
+              this.sprites.ids.berryBush.offset.x, this.sprites.ids.berryBush.offset.y, 16, 16,
               tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
+        } else if (tile.palmTree) {
+          ctx.drawImage(this.sprites.spriteSheet,
+              this.sprites.ids.palmTree.offset.x, this.sprites.ids.palmTree.offset.y, 64, 64,
+              tileX * 16 - pixelOffsetX - 24, tileY * 16 - pixelOffsetY - 24, 64, 64);
         }
       }
     }

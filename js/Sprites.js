@@ -1,20 +1,21 @@
-function Sprites() {
+function Sprites () {
   this.ids = {
-     deepOcean: { offset: 0 },
-     ocean: { offset: 16 },
-     coast: { offset: 32 },
-     wetSand: { offset: 48 },
-     sand: { offset: 64 },
-     grass: { offset: 80 },
-     forest: { offset: 96 },
-     dirtGrass: { offset: 112 },
-     dirtStone: { offset: 128 },
-     stone: { offset: 144 },
-     appleTree: { offset: 160 }
+     deepOcean: { offset : { x: 0, y: 0 } },
+     ocean: { offset: { x: 16, y: 0 } },
+     coast: { offset: { x: 32, y: 0 } },
+     wetSand: { offset: { x: 48, y: 0 } },
+     sand: { offset: { x: 64, y: 0 } },
+     grass: { offset: { x: 80, y: 0 } },
+     forest: { offset: { x: 96, y: 0 } },
+     dirtGrass: { offset: { x: 112, y: 0 } },
+     dirtStone: { offset: { x: 128, y: 0 } },
+     stone: { offset: { x: 144, y: 0 } },
+     berryBush: { offset: { x: 160, y: 0 } },
+     palmTree: { offset: { x: 0, y: 16 } }
   };
   this.spriteSheet = document.createElement('canvas');
   this.spriteSheet.width = 16 * Object.keys(this.ids).length;
-  this.spriteSheet.height = 16;
+  this.spriteSheet.height = 16 + 64;
   this.context2d = this.spriteSheet.getContext('2d');
 }
 
@@ -29,7 +30,8 @@ Sprites.prototype.generate = function () {
   this.generateDirtGrass();
   this.generateDirtStone();
   this.generateStone();
-  this.generateAppleTree();
+  this.generateberryBush();
+  this.generatePalmTree();
 };
 
 Sprites.prototype.generateDeepOcean = function () {
@@ -37,19 +39,22 @@ Sprites.prototype.generateDeepOcean = function () {
   var offset = this.ids.deepOcean.offset;
 
   ctx.fillStyle = Colors.darkBlue;
-  ctx.fillRect(offset, 0, 16, 16);
+  ctx.fillRect(offset.x, offset.y, 16, 16);
 };
 
 Sprites.prototype.generateOcean = function () {
-  this.generateMixedColor(this.ids.ocean.offset, Colors.darkBlue, Colors.blue);
+  var offset = this.ids.ocean.offset;
+  this.generateMixedColor(offset.x, offset.y, Colors.darkBlue, Colors.blue);
 };
 
 Sprites.prototype.generateCoast = function () {
-  this.generateMixedColor(this.ids.coast.offset, Colors.blue, Colors.yellow);
+  var offset = this.ids.coast.offset;
+  this.generateMixedColor(offset.x, offset.y, Colors.blue, Colors.yellow);
 };
 
 Sprites.prototype.generateWetSand = function () {
-  this.generateMixedColor(this.ids.wetSand.offset, Colors.orange, Colors.yellow);
+  var offset = this.ids.wetSand.offset;
+  this.generateMixedColor(offset.x, offset.y, Colors.orange, Colors.yellow);
 };
 
 Sprites.prototype.generateSand = function () {
@@ -57,52 +62,59 @@ Sprites.prototype.generateSand = function () {
   var offset = this.ids.sand.offset;
 
   ctx.fillStyle = Colors.yellow;
-  ctx.fillRect(offset, 0, 16, 16);
+  ctx.fillRect(offset.x, offset.y, 16, 16);
 };
 
 Sprites.prototype.generateGrass = function () {
-  this.generateMixedColor(this.ids.grass.offset, Colors.green, Colors.yellow);
+  var offset = this.ids.grass.offset;
+  this.generateMixedColor(offset.x, offset.y, Colors.green, Colors.yellow);
 };
 
 Sprites.prototype.generateForest = function () {
-  this.generateMixedColor(this.ids.forest.offset, Colors.green, Colors.darkGreen);
+  var offset = this.ids.forest.offset;
+  this.generateMixedColor(offset.x, offset.y, Colors.green, Colors.darkGreen);
 };
 
 Sprites.prototype.generateDirtGrass = function () {
-  this.generateMixedColor(this.ids.dirtGrass.offset, Colors.darkGreen, Colors.brown);
+  var offset = this.ids.dirtGrass.offset;
+  this.generateMixedColor(offset.x, offset.y, Colors.darkGreen, Colors.brown);
 };
 
 Sprites.prototype.generateDirtStone = function () {
-  this.generateMixedColor(this.ids.dirtStone.offset, Colors.brown, Colors.darkBrown);
+  var offset = this.ids.dirtStone.offset;
+  this.generateMixedColor(offset.x, offset.y, Colors.brown, Colors.darkBrown);
 };
 
 Sprites.prototype.generateStone = function () {
-  this.generateMixedColor(this.ids.stone.offset, Colors.darkBrown, Colors.grey);
+  var offset = this.ids.stone.offset;
+  this.generateMixedColor(offset.x, offset.y, Colors.darkBrown, Colors.grey);
 };
 
-Sprites.prototype.generateMixedColor = function (offset, color1, color2) {
+Sprites.prototype.generateMixedColor = function (offsetX, offsetY, color1, color2) {
   var ctx = this.context2d;
   var i;
 
   ctx.fillStyle = color1;
   ctx.strokeStyle = color2;
-  ctx.fillRect(offset, 0, 16, 16);
+  ctx.fillRect(offsetX, offsetY, 16, 16);
   ctx.beginPath();
   for (i = 1; i < 16; i += 2) {
-    ctx.moveTo(offset, i);
-    ctx.lineTo(offset + i, 0);
-    ctx.moveTo(offset + 16 - i, 16);
-    ctx.lineTo(offset + 16, 16 - i);
+    ctx.moveTo(offsetX, offsetY + i);
+    ctx.lineTo(offsetX + i, offsetY + 0);
+    ctx.moveTo(offsetX + 16 - i, offsetY + 16);
+    ctx.lineTo(offsetX + 16, offsetY + 16 - i);
   }
   ctx.stroke();
 };
 
-Sprites.prototype.generateAppleTree = function () {
+Sprites.prototype.generateberryBush = function () {
   var ctx = this.context2d;
   var angle;
   var dist;
+  var offset;
   var i, x, y;
 
+  offset = this.ids.berryBush.offset;
   [ { color: Colors.darkGreen, steps: 300 },
     { color: Colors.green, steps: 150 },
     { color: Colors.red, steps: 10 },
@@ -111,9 +123,49 @@ Sprites.prototype.generateAppleTree = function () {
     for (i = 0; i < config.steps; i++) {
       angle = Math.random() * Math.PI * 2;
       dist = Math.floor(Math.random() * 7);
-      x = this.ids.appleTree.offset + 8 +Math.floor(Math.cos(angle) * dist);
-      y = 8 + Math.floor(Math.sin(angle) * dist);
+      x = offset.x + 8 +Math.floor(Math.cos(angle) * dist);
+      y = offset.y + 8 + Math.floor(Math.sin(angle) * dist);
       ctx.fillRect(x, y, 1, 1);
     }
   }, this);
+};
+
+Sprites.prototype.generatePalmTree = function () {
+  var offset = this.ids.palmTree.offset;
+
+  this.generateBranches({
+    offset: offset,
+    color: Colors.darkGreen,
+    steps: 100,
+    baseLength: 20,
+    variableLength: 12
+  });
+  this.generateBranches({
+    offset: offset,
+    color: Colors.green,
+    steps: 100,
+    baseLength: 10,
+    variableLength: 12
+  });
+};
+
+Sprites.prototype.generateBranches = function (options) {
+  var ctx = this.context2d;
+  var i, a, d;
+  var offset = options.offset;
+  var color = options.color;
+  var steps = options.steps;
+  var baseLength = options.baseLength;
+  var variableLength = options.variableLength;
+
+  a = 0;
+  ctx.strokeStyle = color;
+  ctx.beginPath();
+  for (i = 0; i < steps; i++) {
+    a = Math.random() * 2 * Math.PI;
+    d = baseLength + Math.random() * variableLength;
+    ctx.moveTo(offset.x + 32, offset.y + 32);
+    ctx.lineTo(offset.x + 32 + Math.sin(a) * d, offset.y + 32 + Math.cos(a) * d);
+  }
+  ctx.stroke();
 };

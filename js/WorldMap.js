@@ -84,12 +84,27 @@ WorldMap.prototype.erode = function (steps) {
   }
 };
 
-WorldMap.prototype.generateTrees = function () {
+WorldMap.prototype.generateVegetation = function () {
+  this.generatePalmTree();
+  this.generateBerryBush();
+};
+
+WorldMap.prototype.generatePalmTree = function () {
+  this.tiles
+    .filter(function (tile) {
+      return tile.height === 4;
+    })
+    .forEach(function (tile) {
+      if (Math.random() > 0.9) { tile.palmTree = true; }
+    });
+};
+
+WorldMap.prototype.generateBerryBush = function () {
   this.tiles
       .filter(function (tile) {
         return tile.height === 7;
       })
       .forEach(function (tile) {
-        if (Math.random() > 0.7) { tile.tree = 'appleTree'; }
+        if (Math.random() > 0.7) { tile.berryBush = true; }
       });
-}
+};
