@@ -87,6 +87,7 @@ WorldMap.prototype.erode = function (steps) {
 WorldMap.prototype.generateVegetation = function () {
   this.generatePalmTree();
   this.generateBerryBush();
+  this.generateCherryTree();
 };
 
 WorldMap.prototype.generatePalmTree = function () {
@@ -101,10 +102,22 @@ WorldMap.prototype.generatePalmTree = function () {
     });
 };
 
+WorldMap.prototype.generateCherryTree = function () {
+  this.tiles
+    .filter(function (tile) {
+      return tile.height === 7;
+    })
+    .forEach(function (tile, index, self) {
+      if (Math.random() > 0.7) {
+         tile.cherryTree = true;
+      }
+    });
+};
+
 WorldMap.prototype.generateBerryBush = function () {
   this.tiles
       .filter(function (tile) {
-        return tile.height === 7;
+        return tile.height === 6;
       })
       .forEach(function (tile) {
         if (Math.random() > 0.7) { tile.berryBush = true; }

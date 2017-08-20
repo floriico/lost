@@ -11,10 +11,11 @@ function Sprites () {
      dirtStone: { offset: { x: 128, y: 0 } },
      stone: { offset: { x: 144, y: 0 } },
      berryBush: { offset: { x: 160, y: 0 } },
-     palmTree: { offset: { x: 0, y: 16 } }
+     palmTree: { offset: { x: 0, y: 16 } },
+     cherryTree: { offset: { x: 64, y: 16 } }
   };
   this.spriteSheet = document.createElement('canvas');
-  this.spriteSheet.width = 16 * Object.keys(this.ids).length;
+  this.spriteSheet.width = 256;
   this.spriteSheet.height = 16 + 64;
   this.context2d = this.spriteSheet.getContext('2d');
 }
@@ -32,6 +33,7 @@ Sprites.prototype.generate = function () {
   this.generateStone();
   this.generateberryBush();
   this.generatePalmTree();
+  this.generateCherryTree();
 };
 
 Sprites.prototype.generateDeepOcean = function () {
@@ -149,6 +151,34 @@ Sprites.prototype.generatePalmTree = function () {
   });
 };
 
+Sprites.prototype.generateCherryTree = function () {
+  var offset = this.ids.cherryTree.offset;
+
+  this.generateBranches({
+    offset: offset,
+    color: Colors.brown,
+    steps: 30,
+    baseLength: 10,
+    variableLength: 12
+  });
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.darkGreen,
+    steps: 200,
+    box: 64,
+    radius: 20,
+    leafSize: 2
+  });
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.green,
+    steps: 100,
+    box: 64,
+    radius: 20,
+    leafSize: 2
+  });
+};
+
 Sprites.prototype.generateBranches = function (options) {
   var ctx = this.context2d;
   var i, a, d;
@@ -165,7 +195,29 @@ Sprites.prototype.generateBranches = function (options) {
     a = Math.random() * 2 * Math.PI;
     d = baseLength + Math.random() * variableLength;
     ctx.moveTo(offset.x + 32, offset.y + 32);
-    ctx.lineTo(offset.x + 32 + Math.sin(a) * d, offset.y + 32 + Math.cos(a) * d);
+    ctx.lineTo(Math.floor(offset.x + 32 + Math.sin(a) * d),
+        Math.floor(offset.y + 32 + Math.cos(a) * d));
   }
   ctx.stroke();
+};
+
+Sprites.prototype.generateLeaves = function (options) {
+  var ctx = this.context2d;
+  var i, a, d;
+  var offset = options.offset;
+  var color = options.color;
+  var steps = options.steps;
+  var box = options.box / 2;
+  var radius = options.radius;
+  var leafSize = options.leafSize;
+
+  a = 0;
+  ctx.fillStyle = color;
+  for (i = 0; i < steps; i++) {
+    a = Math.random() * 2 * Math.PI;
+    d = Math.floor(Math.random() * radius);
+    ctx.fillRect(Math.floor(offset.x + box + Math.sin(a) * d),
+        Math.floor(offset.y + 32 + Math.cos(a) * d),
+        leafSize, leafSize);
+  }
 };

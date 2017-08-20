@@ -66,6 +66,10 @@ WorldMapRenderer.prototype.render = function () {
           topCtx.drawImage(this.sprites.spriteSheet,
               this.sprites.ids.palmTree.offset.x, this.sprites.ids.palmTree.offset.y, 64, 64,
               tileX * 16 - pixelOffsetX - 24, tileY * 16 - pixelOffsetY - 24, 64, 64);
+        } else if (tile.cherryTree) {
+          topCtx.drawImage(this.sprites.spriteSheet,
+              this.sprites.ids.cherryTree.offset.x, this.sprites.ids.cherryTree.offset.y, 64, 64,
+              tileX * 16 - pixelOffsetX - 24, tileY * 16 - pixelOffsetY - 24, 64, 64);
         }
       }
     }
