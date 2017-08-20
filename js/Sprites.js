@@ -10,9 +10,11 @@ function Sprites () {
      dirtGrass: { offset: { x: 112, y: 0 } },
      dirtStone: { offset: { x: 128, y: 0 } },
      stone: { offset: { x: 144, y: 0 } },
-     berryBush: { offset: { x: 160, y: 0 } },
+     bush: { offset: { x: 160, y: 0 } },
+     berryBush: { offset: { x: 176, y: 0 } },
      palmTree: { offset: { x: 0, y: 16 } },
-     cherryTree: { offset: { x: 64, y: 16 } }
+     commonTree: { offset: { x: 64, y: 16 } },
+     appleTree: { offset: { x: 128, y: 16 } }
   };
   this.spriteSheet = document.createElement('canvas');
   this.spriteSheet.width = 256;
@@ -31,9 +33,11 @@ Sprites.prototype.generate = function () {
   this.generateDirtGrass();
   this.generateDirtStone();
   this.generateStone();
+  this.generateBush();
   this.generateberryBush();
   this.generatePalmTree();
-  this.generateCherryTree();
+  this.generateCommonTree();
+  this.generateAppleTree();
 };
 
 Sprites.prototype.generateDeepOcean = function () {
@@ -109,27 +113,55 @@ Sprites.prototype.generateMixedColor = function (offsetX, offsetY, color1, color
   ctx.stroke();
 };
 
+Sprites.prototype.generateBush = function () {
+  var offset = this.ids.bush.offset;
+
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.darkGreen,
+    steps: 200,
+    box: 16,
+    radius: 7,
+    leafSize: 1
+  });
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.green,
+    steps: 100,
+    box: 16,
+    radius: 7,
+    leafSize: 1
+  });
+}
+
 Sprites.prototype.generateberryBush = function () {
-  var ctx = this.context2d;
-  var angle;
-  var dist;
   var offset;
-  var i, x, y;
 
   offset = this.ids.berryBush.offset;
-  [ { color: Colors.darkGreen, steps: 300 },
-    { color: Colors.green, steps: 150 },
-    { color: Colors.red, steps: 10 },
-  ].forEach(function (config) {
-    ctx.fillStyle = config.color;
-    for (i = 0; i < config.steps; i++) {
-      angle = Math.random() * Math.PI * 2;
-      dist = Math.floor(Math.random() * 7);
-      x = offset.x + 8 +Math.floor(Math.cos(angle) * dist);
-      y = offset.y + 8 + Math.floor(Math.sin(angle) * dist);
-      ctx.fillRect(x, y, 1, 1);
-    }
-  }, this);
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.darkGreen,
+    steps: 200,
+    box: 16,
+    radius: 7,
+    leafSize: 1
+  });
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.green,
+    steps: 80,
+    box: 16,
+    radius: 7,
+    leafSize: 1
+  });
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.blue,
+    steps: 15,
+    box: 16,
+    radius: 6,
+    leafSize: 1
+  });
 };
 
 Sprites.prototype.generatePalmTree = function () {
@@ -151,8 +183,8 @@ Sprites.prototype.generatePalmTree = function () {
   });
 };
 
-Sprites.prototype.generateCherryTree = function () {
-  var offset = this.ids.cherryTree.offset;
+Sprites.prototype.generateCommonTree = function () {
+  var offset = this.ids.commonTree.offset;
 
   this.generateBranches({
     offset: offset,
@@ -178,6 +210,42 @@ Sprites.prototype.generateCherryTree = function () {
     leafSize: 2
   });
 };
+
+Sprites.prototype.generateAppleTree = function () {
+  var offset = this.ids.appleTree.offset;
+
+  this.generateBranches({
+    offset: offset,
+    color: Colors.brown,
+    steps: 30,
+    baseLength: 10,
+    variableLength: 12
+  });
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.darkGreen,
+    steps: 200,
+    box: 64,
+    radius: 20,
+    leafSize: 2
+  });
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.green,
+    steps: 100,
+    box: 64,
+    radius: 20,
+    leafSize: 2
+  });
+  this.generateLeaves({
+    offset: offset,
+    color: Colors.red,
+    steps: 5,
+    box: 64,
+    radius: 18,
+    leafSize: 3
+  });
+}
 
 Sprites.prototype.generateBranches = function (options) {
   var ctx = this.context2d;
@@ -217,7 +285,7 @@ Sprites.prototype.generateLeaves = function (options) {
     a = Math.random() * 2 * Math.PI;
     d = Math.floor(Math.random() * radius);
     ctx.fillRect(Math.floor(offset.x + box + Math.sin(a) * d),
-        Math.floor(offset.y + 32 + Math.cos(a) * d),
+        Math.floor(offset.y + box + Math.cos(a) * d),
         leafSize, leafSize);
   }
 };

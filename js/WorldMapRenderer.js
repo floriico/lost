@@ -58,7 +58,11 @@ WorldMapRenderer.prototype.render = function () {
 
         ctx.drawImage(this.sprites.spriteSheet, spriteOffset.x, spriteOffset.y, 16, 16,
             tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
-        if (tile.berryBush) {
+        if (tile.bush) {
+          ctx.drawImage(this.sprites.spriteSheet,
+              this.sprites.ids.bush.offset.x, this.sprites.ids.bush.offset.y, 16, 16,
+              tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
+        } else if (tile.berryBush) {
           ctx.drawImage(this.sprites.spriteSheet,
               this.sprites.ids.berryBush.offset.x, this.sprites.ids.berryBush.offset.y, 16, 16,
               tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
@@ -66,9 +70,13 @@ WorldMapRenderer.prototype.render = function () {
           topCtx.drawImage(this.sprites.spriteSheet,
               this.sprites.ids.palmTree.offset.x, this.sprites.ids.palmTree.offset.y, 64, 64,
               tileX * 16 - pixelOffsetX - 24, tileY * 16 - pixelOffsetY - 24, 64, 64);
-        } else if (tile.cherryTree) {
+        } else if (tile.commonTree) {
           topCtx.drawImage(this.sprites.spriteSheet,
-              this.sprites.ids.cherryTree.offset.x, this.sprites.ids.cherryTree.offset.y, 64, 64,
+              this.sprites.ids.commonTree.offset.x, this.sprites.ids.commonTree.offset.y, 64, 64,
+              tileX * 16 - pixelOffsetX - 24, tileY * 16 - pixelOffsetY - 24, 64, 64);
+        } else if (tile.appleTree) {
+          topCtx.drawImage(this.sprites.spriteSheet,
+              this.sprites.ids.appleTree.offset.x, this.sprites.ids.appleTree.offset.y, 64, 64,
               tileX * 16 - pixelOffsetX - 24, tileY * 16 - pixelOffsetY - 24, 64, 64);
         }
       }
