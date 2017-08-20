@@ -94,8 +94,10 @@ WorldMap.prototype.generatePalmTree = function () {
     .filter(function (tile) {
       return tile.height === 4;
     })
-    .forEach(function (tile) {
-      if (Math.random() > 0.9) { tile.palmTree = true; }
+    .forEach(function (tile, index, self) {
+      if ((index > 1) && !(self[index - 1].palmTree) && Math.random() > 0.9) {
+         tile.palmTree = true;
+       }
     });
 };
 

@@ -3,10 +3,12 @@ function WorldMapRenderer (options) {
   this.sprites = options.sprites;
   this.player = options.player;
   this.canvas = options.canvas;
+  this.topCanvas = options.topCanvas;
 }
 
 WorldMapRenderer.prototype.render = function () {
   var ctx = this.canvas.getContext('2d');
+  var topCtx = this.topCanvas.getContext('2d');
   var tileWidth = this.canvas.width / 16 + 1;
   var tileHeight = this.canvas.height / 16 + 1;
   var tileOffsetX = Math.floor(this.player.x / 16) - Math.floor(tileWidth / 2);
@@ -21,6 +23,7 @@ WorldMapRenderer.prototype.render = function () {
   var spriteOffset;
   var i;
 
+  topCtx.clearRect(0, 0, this.topCanvas.width, this.topCanvas.height);
   ctx.fillStyle = Colors.darkBlue;
   ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   for (i = 0; i < len; i++) {
@@ -60,7 +63,7 @@ WorldMapRenderer.prototype.render = function () {
               this.sprites.ids.berryBush.offset.x, this.sprites.ids.berryBush.offset.y, 16, 16,
               tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
         } else if (tile.palmTree) {
-          ctx.drawImage(this.sprites.spriteSheet,
+          topCtx.drawImage(this.sprites.spriteSheet,
               this.sprites.ids.palmTree.offset.x, this.sprites.ids.palmTree.offset.y, 64, 64,
               tileX * 16 - pixelOffsetX - 24, tileY * 16 - pixelOffsetY - 24, 64, 64);
         }
