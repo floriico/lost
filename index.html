@@ -5,12 +5,14 @@
     <title>Lost</title>
     <style>
       * { margin: 0; padding:0; box-sizing: border-box; }
-      canvas { position: absolute; top: 0; left: 0; width: 100%; max-height: 100vh;}
+      canvas { position: absolute; top: 0; left: 0; width: 100%; max-height: 100vh; }
+      #hp { position: absolute; top: 0; left: 0; padding: 5px; font-size: 14px; color: rgb(208, 70, 72); }
     </style>
   </head>
   <body>
     <canvas id="game" width="480" height="320"></canvas>
     <canvas id="top" width="480" height="320"></canvas>
+    <p id="hp"></p>
     <script src="js/Colors.js"></script>
     <script src="js/Sprites.js"></script>
     <script src="js/Keyboard.js"></script>

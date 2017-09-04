@@ -1,12 +1,13 @@
 var canvas = document.getElementById('game');
 var topCanvas = document.getElementById('top');
+var hpBar = document.getElementById('hp');
 var keyboard = new Keyboard({ element: document.body });
 var sprites = new Sprites();
 var worldMap = new WorldMap(1000, 800);
 var player = new Player();
 var playerRenderer = new PlayerRenderer({ player, canvas });
 var worldMapRenderer = new WorldMapRenderer({ worldMap, sprites, canvas, topCanvas, player });
-var playerUpdater = new PlayerUpdater({ player, keyboard, worldMap });
+var playerUpdater = new PlayerUpdater({ player, keyboard, worldMap, hpBar });
 var loop = new GameLoop({
   updatePipeline: [
     playerUpdater
