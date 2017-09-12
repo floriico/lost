@@ -2,6 +2,7 @@ function PlayerRenderer (options) {
   this.player = options.player;
   this.canvas = options.canvas;
   this.sprites = options.sprites;
+  this.worldMap = options.worldMap;
 }
 
 PlayerRenderer.prototype.render = function () {
@@ -10,9 +11,41 @@ PlayerRenderer.prototype.render = function () {
     x: Math.floor(this.canvas.width / 2),
     y: Math.floor(this.canvas.height / 2)
   };
+  var dist;
 
-  ctx.fillStyle = '#fabbec';
-  ctx.fillRect(center.x - 5, center.y - 20, 10, 20);
+  if (worldMap.transmitter) {
+    dist = Math.sqrt(Math.pow(this.player.x - this.worldMap.transmitter.x, 2) + Math.pow(this.player.y - this.worldMap.transmitter.y, 2));
+  } else if (worldMap.antenna) {
+    dist = Math.sqrt(Math.pow(this.player.x - this.worldMap.antenna.x, 2) + Math.pow(this.player.y - this.worldMap.antenna.y, 2));
+  } else if (worldMap.battery) {
+    dist = Math.sqrt(Math.pow(this.player.x - this.worldMap.battery.x, 2) + Math.pow(this.player.y - this.battery.transmitter.y, 2));
+  }
+
+  ctx.fillStyle = Colors.grey;
+  ctx.fillRect(center.x - 3, center.y - 15, 8, 8);
+  ctx.fillRect(center.x - 3, center.y - 7, 3, 2);
+  ctx.fillRect(center.x + 2, center.y - 7, 3, 2);
+  ctx.fillStyle = Colors.lightBrown;
+  ctx.fillRect(center.x - 3, center.y - 5, 3, 5);
+  ctx.fillRect(center.x + 2, center.y - 5, 3, 5);
+  ctx.fillRect(center.x - 5, center.y - 14, 2, 6);
+  ctx.fillRect(center.x + 5, center.y - 14, 2, 6);
+  ctx.fillRect(center.x - 1, center.y - 16, 3, 1);
+  ctx.fillRect(center.x - 2, center.y - 19, 5, 3);
+  ctx.fillStyle = Colors.yellow;
+  ctx.fillRect(center.x - 1, center.y - 20, 3, 1);
+  if (dist < 500) {
+    ctx.fillStyle = Colors.red;
+  } else if (dist <  1000) {
+    ctx.fillStyle = Colors.orange;
+  } else if (dist < 2000) {
+    ctx.fillStyle = Colors.yellow;
+  } else if (dist < 3000) {
+    ctx.fillStyle = Colors.blue;
+  } else {
+    ctx.fillStyle = Colors.darkBlue;
+  }
+  ctx.fillRect(center.x - 1, center.y - 13, 3, 2);
   this.renderInventory();
 };
 

@@ -107,18 +107,21 @@ PlayerUpdater.prototype.take = function () {
   transmitter = tiles.find(function (tile) { return tile.transmitter; });
   if (transmitter) {
     delete transmitter.transmitter;
+    delete worldMap.transmitter;
     this.player.transmitter = true;
     this.checkObjectives();
   }
   antenna = tiles.find(function (tile) { return tile.antenna; });
   if (antenna) {
     delete antenna.antenna;
+    delete worldMap.antenna;
     this.player.antenna = true;
     this.checkObjectives();
   }
   battery = tiles.find(function (tile) { return tile.battery; });
   if (battery) {
     delete battery.battery;
+    delete worldMap.battery;
     this.player.battery = true;
     this.checkObjectives();
   }

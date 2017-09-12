@@ -8,6 +8,9 @@ function WorldMap (width, height) {
   this.tiles = new Array(this.size);
   i = this.size;
   while (i-- > 0) { this.tiles[i] = { height: 0 }; }
+  this.transmitter = { x: 0, y: 0 };
+  this.antenna = { x: 0, y: 0 };
+  this.battery = { x: 0, y: 0 };
 }
 
 WorldMap.prototype.generateMountains = function () {
@@ -133,6 +136,9 @@ WorldMap.prototype.generateBushes = function () {
 WorldMap.prototype.placeEquipments = function () {
   var land;
   var thirdLand;
+  var transmitterId;
+  var antennaId;
+  var batteryId;
 
   land = this.tiles
     .filter(function (tile) {
@@ -142,6 +148,18 @@ WorldMap.prototype.placeEquipments = function () {
   land[Math.floor(Math.random() * thirdLand)].transmitter = true;
   land[thirdLand + Math.floor(Math.random() * thirdLand)].antenna = true;
   land[2 * thirdLand + Math.floor(Math.random() * thirdLand)].battery = true;
+
+  transmitterId = this.tiles.findIndex(function (tile) { return tile.transmitter; });
+  this.transmitter.x = (transmitterId % this.width) * this.tileSize;
+  this.transmitter.y = Math.floor(transmitterId / this.width) * this.tileSize;
+
+  antennaId = this.tiles.findIndex(function (tile) { return tile.antenna; });
+  this.antenna.x = (antennaId % this.width) * this.tileSize;
+  this.antenna.y = Math.floor(antennaId / this.width) * this.tileSize;
+
+  batteryId = this.tiles.findIndex(function (tile) { return tile.battery; });
+  this.battery.x = (batteryId % this.width) * this.tileSize;
+  this.battery.y = Math.floor(batteryId / this.width) * this.tileSize;
 };
 
 WorldMap.prototype.getTile = function (worldX, worldY) {
