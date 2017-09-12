@@ -1,13 +1,14 @@
 var canvas = document.getElementById('game');
 var topCanvas = document.getElementById('top');
 var hpBar = document.getElementById('hp');
+var pubSub = new PubSub();
 var keyboard = new Keyboard({ element: document.body });
 var sprites = new Sprites();
 var worldMap = new WorldMap(1000, 800);
 var player = new Player();
 var playerRenderer = new PlayerRenderer({ player, canvas });
 var worldMapRenderer = new WorldMapRenderer({ worldMap, sprites, canvas, topCanvas, player });
-var playerUpdater = new PlayerUpdater({ player, keyboard, worldMap, hpBar });
+var playerUpdater = new PlayerUpdater({ player, keyboard, worldMap, hpBar, pubSub });
 var loop = new GameLoop({
   updatePipeline: [
     playerUpdater
@@ -28,11 +29,25 @@ player.x = (firstLand % worldMap.width) * worldMap.tileSize + worldMap.tileSize 
 player.y = Math.floor(firstLand / worldMap.width) * worldMap.tileSize + worldMap.tileSize / 2;
 worldMapRenderer.render();
 
+this.pubSub.subscribe('gameOver', gameOver);
+
 function startGame () {
   document.getElementById('home').classList.add('hidden');
   document.getElementById('play').classList.remove('hidden');
   loop.start();
   document.body.removeEventListener('keypress', startGame);
+}
+
+function endGame () {
+  loop.stop();
+  document.getElementById('play').classList.add('hidden');
+  document.getElementById('endGame').classList.remove('hidden');
+}
+
+function gameOver () {
+  loop.stop();
+  document.getElementById('play').classList.add('hidden');
+  document.getElementById('gameOver').classList.remove('hidden');
 }
 
 document.body.addEventListener('keypress', startGame);

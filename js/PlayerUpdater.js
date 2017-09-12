@@ -4,6 +4,7 @@ function PlayerUpdater (options) {
   this.worldMap = options.worldMap;
   this.hpBar = options.hpBar;
   this.hungerTime = 0;
+  this.pubSub = options.pubSub;
 }
 
 PlayerUpdater.prototype.update = function (deltaTime) {
@@ -57,6 +58,9 @@ PlayerUpdater.prototype.hunger = function (dt) {
   if (this.hungerTime > 1000) {
     this.hungerTime -= 1000;
     this.player.hp -= 1;
+  }
+  if (this.player.hp <= 0) {
+    this.pubSub.publish('gameOver');
   }
 };
 
