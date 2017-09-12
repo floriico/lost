@@ -3,7 +3,8 @@ function Keyboard (options) {
     up: false,
     down: false,
     left: false,
-    right: false
+    right: false,
+    action: false
   };
   this.element = options.element;
   this.element.addEventListener('keydown', this.onKeyDown.bind(this));
@@ -27,5 +28,7 @@ Keyboard.prototype.updateKey = function (keyCode, value) {
     this.keys.right = value;
   } else if (keyCode === 37 || keyCode === 65 || keyCode === 81) {
     this.keys.left = value;
+  } else if (keyCode === 69) {
+    this.keys.action = value;
   }
 };

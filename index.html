@@ -6,9 +6,9 @@
     <style>
       * { margin: 0; padding:0; box-sizing: border-box; }
       body { font-family: sans-serif;  background-color: rgb(48, 52, 109); }
-      #home { max-width: 480px; margin: 0 auto; text-align: center; color: rgb(218, 212, 94); }
-      #home h1 { font-size: 2rem; line-height: 3rem; margin: 3rem 0; }
-      #home p { line-height: 1.5rem; margin-bottom: 1.5rem; }
+      .message { max-width: 480px; margin: 0 auto; text-align: center; color: rgb(218, 212, 94); }
+      .message h1 { font-size: 2rem; line-height: 3rem; margin: 3rem 0; }
+      .message p { line-height: 1.5rem; margin-bottom: 1.5rem; }
       canvas { position: absolute; top: 0; left: 0; width: 100%; max-height: 100vh; }
       #hp { position: absolute; top: 0; left: 0; padding: 5px; color: rgb(208, 70, 72); }
       .hidden { display: none; }
@@ -16,7 +16,7 @@
     </style>
   </head>
   <body>
-    <div id="home">
+    <div id="home" class="message">
       <h1>Lost</h1>
       <p>Your plane crashed and you are alone on a island. You must collect the transmitter, the antena, the battery and the mic in order to broadcast your SOS before you starve. Pick fruits or berries to slow you hunger.</p>
       <p>Arrow keys / wasd / zqsd to move, e to take food or equipment.</p>
@@ -27,11 +27,11 @@
       <canvas id="top" width="480" height="320"></canvas>
       <p id="hp"></p>
     </div>
-    <div id="endGame" class="hidden">
+    <div id="endGame" class="hidden message">
       <h1>Rescued</h1>
       <p>A fishing boat get your call and is on its way to get you. Seems you are not lost after all :).<p>
     </div>
-    <div id="gameOver" class="hidden">
+    <div id="gameOver" class="hidden message">
       <h1>Game Over</h1>
       <p>You died from starvation. No one ever found you. You are lost forever<p>
     </div>

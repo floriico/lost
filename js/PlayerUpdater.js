@@ -31,6 +31,9 @@ PlayerUpdater.prototype.update = function (deltaTime) {
     this.player.x = destX;
     this.player.y = destY;
   }
+  if (this.keyboard.keys.action) {
+    this.eat();
+  }
   this.hunger(deltaTime);
   this.updateHpBar();
 };
@@ -73,4 +76,29 @@ PlayerUpdater.prototype.updateHpBar = function () {
     heartStr += '\u2764';
   }
   this.hpBar.textContent = heartStr;
+};
+
+PlayerUpdater.prototype.eat = function () {
+  var tiles;
+  var food;
+
+  tiles = [
+    this.worldMap.getTile(this.player.x, this.player.y),
+    this.worldMap.getTile(this.player.x - 16, this.player.y - 16),
+    this.worldMap.getTile(this.player.x, this.player.y - 16),
+    this.worldMap.getTile(this.player.x + 16, this.player.y - 16),
+    this.worldMap.getTile(this.player.x - 16, this.player.y),
+    this.worldMap.getTile(this.player.x + 16, this.player.y),
+    this.worldMap.getTile(this.player.x - 16, this.player.y + 16),
+    this.worldMap.getTile(this.player.x, this.player.y + 16),
+    this.worldMap.getTile(this.player.x + 16, this.player.y + 16)
+  ];
+  food = tiles.find(function (tile) {
+    return tile.appleTree || tile.berryBush;
+  });
+  if (food) {
+    delete food.appleTree;
+    delete food.berryBush;
+    this.player.hp += 3;
+  }
 };

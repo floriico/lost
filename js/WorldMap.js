@@ -116,8 +116,6 @@ WorldMap.prototype.generateForest = function () {
     });
 };
 
-
-
 WorldMap.prototype.generateBushes = function () {
   this.tiles
       .filter(function (tile) {
@@ -130,4 +128,19 @@ WorldMap.prototype.generateBushes = function () {
           tile.berryBush = true;
         }
       });
+};
+
+WorldMap.prototype.getTile = function (worldX, worldY) {
+  var tileX = Math.floor(worldX / this.tileSize);
+  var tileY = Math.floor(worldY / this.tileSize);
+  var index;
+  var tile;
+
+  index = tileY * this.width + tileX;
+  if (index >= 0 && index < this.size) {
+    tile = this.tiles[index];
+  } else {
+    tile = {};
+  }
+  return tile;
 };

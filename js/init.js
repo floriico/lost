@@ -30,6 +30,7 @@ player.y = Math.floor(firstLand / worldMap.width) * worldMap.tileSize + worldMap
 worldMapRenderer.render();
 
 this.pubSub.subscribe('gameOver', gameOver);
+this.pubSub.subscribe('endGame', endGame);
 
 function startGame () {
   document.getElementById('home').classList.add('hidden');
