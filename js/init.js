@@ -24,6 +24,7 @@ sprites.generate();
 worldMap.generateMountains();
 worldMap.erode(2);
 worldMap.generateVegetation();
+worldMap.placeEquipments();
 firstLand = worldMap.tiles.findIndex(function (tile) { return tile.height > 1; });
 player.x = (firstLand % worldMap.width) * worldMap.tileSize + worldMap.tileSize / 2;
 player.y = Math.floor(firstLand / worldMap.width) * worldMap.tileSize + worldMap.tileSize / 2;

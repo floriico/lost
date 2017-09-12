@@ -130,6 +130,20 @@ WorldMap.prototype.generateBushes = function () {
       });
 };
 
+WorldMap.prototype.placeEquipments = function () {
+  var land;
+  var thirdLand;
+
+  land = this.tiles
+    .filter(function (tile) {
+      return tile.height >= 4;
+    });
+  thirdLand = Math.floor(land.length / 3);
+  land[Math.floor(Math.random() * thirdLand)].transmitter = true;
+  land[thirdLand + Math.floor(Math.random() * thirdLand)].antenna = true;
+  land[2 * thirdLand + Math.floor(Math.random() * thirdLand)].battery = true;
+};
+
 WorldMap.prototype.getTile = function (worldX, worldY) {
   var tileX = Math.floor(worldX / this.tileSize);
   var tileY = Math.floor(worldY / this.tileSize);

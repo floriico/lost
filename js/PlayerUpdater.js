@@ -32,7 +32,7 @@ PlayerUpdater.prototype.update = function (deltaTime) {
     this.player.y = destY;
   }
   if (this.keyboard.keys.action) {
-    this.eat();
+    this.take();
   }
   this.hunger(deltaTime);
   this.updateHpBar();
@@ -78,9 +78,12 @@ PlayerUpdater.prototype.updateHpBar = function () {
   this.hpBar.textContent = heartStr;
 };
 
-PlayerUpdater.prototype.eat = function () {
+PlayerUpdater.prototype.take = function () {
   var tiles;
   var food;
+  var transmitter;
+  var antenna;
+  var battery;
 
   tiles = [
     this.worldMap.getTile(this.player.x, this.player.y),
@@ -100,5 +103,29 @@ PlayerUpdater.prototype.eat = function () {
     delete food.appleTree;
     delete food.berryBush;
     this.player.hp += 3;
+  }
+  transmitter = tiles.find(function (tile) { return tile.transmitter; });
+  if (transmitter) {
+    delete transmitter.transmitter;
+    this.player.transmitter = true;
+    this.checkObjectives();
+  }
+  antenna = tiles.find(function (tile) { return tile.antenna; });
+  if (antenna) {
+    delete antenna.antenna;
+    this.player.antenna = true;
+    this.checkObjectives();
+  }
+  battery = tiles.find(function (tile) { return tile.battery; });
+  if (battery) {
+    delete battery.battery;
+    this.player.battery = true;
+    this.checkObjectives();
+  }
+};
+
+PlayerUpdater.prototype.checkObjectives = function () {
+  if (this.player.transmitter && this.player.antenna && this.player.battery) {
+    this.pubSub.publish('endGame');
   }
 };

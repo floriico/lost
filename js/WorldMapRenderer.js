@@ -79,6 +79,19 @@ WorldMapRenderer.prototype.render = function () {
               this.sprites.ids.appleTree.offset.x, this.sprites.ids.appleTree.offset.y, 64, 64,
               tileX * 16 - pixelOffsetX - 24, tileY * 16 - pixelOffsetY - 24, 64, 64);
         }
+        if (tile.transmitter) {
+          ctx.drawImage(this.sprites.spriteSheet,
+              this.sprites.ids.transmitter.offset.x, this.sprites.ids.transmitter.offset.y, 16, 16,
+              tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
+        } else if (tile.antenna) {
+          ctx.drawImage(this.sprites.spriteSheet,
+              this.sprites.ids.antenna.offset.x, this.sprites.ids.antenna.offset.y, 16, 16,
+              tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
+        } else if (tile.battery) {
+          ctx.drawImage(this.sprites.spriteSheet,
+              this.sprites.ids.battery.offset.x, this.sprites.ids.battery.offset.y, 16, 16,
+              tileX * 16 - pixelOffsetX, tileY * 16 - pixelOffsetY, 16, 16);
+        }
       }
     }
   }

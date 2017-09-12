@@ -12,6 +12,9 @@ function Sprites () {
      stone: { offset: { x: 144, y: 0 } },
      bush: { offset: { x: 160, y: 0 } },
      berryBush: { offset: { x: 176, y: 0 } },
+     transmitter: { offset: { x: 192, y: 0 } },
+     antenna: { offset: { x: 208, y: 0 } },
+     battery: { offset: { x: 224, y: 0 } },
      palmTree: { offset: { x: 0, y: 16 } },
      commonTree: { offset: { x: 64, y: 16 } },
      appleTree: { offset: { x: 128, y: 16 } }
@@ -38,6 +41,9 @@ Sprites.prototype.generate = function () {
   this.generatePalmTree();
   this.generateCommonTree();
   this.generateAppleTree();
+  this.generateTransmitter();
+  this.generateAntenna();
+  this.generateBattery();
 };
 
 Sprites.prototype.generateDeepOcean = function () {
@@ -288,4 +294,78 @@ Sprites.prototype.generateLeaves = function (options) {
         Math.floor(offset.y + box + Math.cos(a) * d),
         leafSize, leafSize);
   }
+};
+
+Sprites.prototype.generateTransmitter = function () {
+  var ctx = this.context2d;
+  var offset = this.ids.transmitter.offset;
+
+  ctx.fillStyle = Colors.grey;
+  ctx.fillRect(offset.x + 2, offset.y + 4, 12, 9);
+  ctx.fillStyle = Colors.white;
+  ctx.fillRect(offset.x + 3, offset.y + 5, 3, 2);
+  ctx.fillRect(offset.x + 7, offset.y + 5, 3, 2);
+  ctx.fillRect(offset.x + 11, offset.y + 5, 2, 2);
+  ctx.fillStyle = Colors.darkGrey;
+  ctx.fillRect(offset.x + 3, offset.y + 10, 3, 2);
+  ctx.fillStyle = Colors.black;
+  ctx.fillRect(offset.x + 3, offset.y + 8, 1, 2);
+  ctx.fillRect(offset.x + 5, offset.y + 8, 1, 2);
+  ctx.fillStyle = Colors.yellow;
+  ctx.fillRect(offset.x + 7, offset.y + 8, 1, 2);
+  ctx.fillRect(offset.x + 9, offset.y + 8, 1, 2);
+  ctx.fillRect(offset.x + 11, offset.y + 8, 1, 2);
+  ctx.fillStyle = Colors.green;
+  ctx.fillRect(offset.x + 7, offset.y + 10, 1, 2);
+  ctx.fillRect(offset.x + 9, offset.y + 10, 1, 2);
+  ctx.fillRect(offset.x + 11, offset.y + 10, 1, 2);
+  ctx.strokeStyle = Colors.red;
+  ctx.beginPath();
+  ctx.moveTo(offset.x + 4, offset.y + 7);
+  ctx.lineTo(offset.x + 6, offset.y + 5);
+  ctx.moveTo(offset.x + 8, offset.y + 7);
+  ctx.lineTo(offset.x + 10, offset.y + 5);
+  ctx.stroke();
+};
+
+Sprites.prototype.generateAntenna = function () {
+  var ctx = this.context2d;
+  var offset = this.ids.antenna.offset;
+
+  ctx.fillStyle = Colors.grey;
+  ctx.fillRect(offset.x + 9, offset.y + 2, 5, 3);
+  ctx.fillRect(offset.x + 10, offset.y + 1, 3, 5);
+  ctx.beginPath();
+  ctx.strokeStyle = Colors.grey;
+  ctx.moveTo(offset.x + 1, offset.y + 10);
+  ctx.lineTo(offset.x + 5, offset.y + 14);
+  ctx.moveTo(offset.x + 2, offset.y + 9);
+  ctx.lineTo(offset.x + 6, offset.y + 13);
+  ctx.moveTo(offset.x + 4, offset.y + 10);
+  ctx.lineTo(offset.x + 10, offset.y + 4);
+  ctx.moveTo(offset.x + 5, offset.y + 11);
+  ctx.lineTo(offset.x + 11, offset.y + 5);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.strokeStyle = Colors.darkGrey;
+  ctx.moveTo(offset.x + 2, offset.y + 10);
+  ctx.lineTo(offset.x + 5, offset.y + 13);
+  ctx.moveTo(offset.x + 4, offset.y + 11);
+  ctx.lineTo(offset.x + 13, offset.y + 2);
+  ctx.moveTo(offset.x + 10, offset.y + 2);
+  ctx.lineTo(offset.x + 13, offset.y + 5);
+  ctx.stroke();
+};
+
+Sprites.prototype.generateBattery = function () {
+  var ctx = this.context2d;
+  var offset = this.ids.battery.offset;
+
+  ctx.fillStyle = Colors.black;
+  ctx.fillRect(offset.x + 1, offset.y + 5, 7, 7);
+  ctx.fillStyle = Colors.orange;
+  ctx.fillRect(offset.x + 8, offset.y + 5, 7, 7);
+  ctx.fillStyle = Colors.yellow;
+  ctx.fillRect(offset.x + 2, offset.y + 4, 3, 1);
+  ctx.fillRect(offset.x + 11, offset.y + 4, 3, 1);
 };
