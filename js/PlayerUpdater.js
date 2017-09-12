@@ -102,7 +102,7 @@ PlayerUpdater.prototype.take = function () {
   if (food) {
     delete food.appleTree;
     delete food.berryBush;
-    this.player.hp += 3;
+    this.player.hp += 1.2;
   }
   transmitter = tiles.find(function (tile) { return tile.transmitter; });
   if (transmitter) {

@@ -18,7 +18,7 @@ PlayerRenderer.prototype.render = function () {
   } else if (worldMap.antenna) {
     dist = Math.sqrt(Math.pow(this.player.x - this.worldMap.antenna.x, 2) + Math.pow(this.player.y - this.worldMap.antenna.y, 2));
   } else if (worldMap.battery) {
-    dist = Math.sqrt(Math.pow(this.player.x - this.worldMap.battery.x, 2) + Math.pow(this.player.y - this.battery.transmitter.y, 2));
+    dist = Math.sqrt(Math.pow(this.player.x - this.worldMap.battery.x, 2) + Math.pow(this.player.y - this.worldMap.battery.y, 2));
   }
 
   ctx.fillStyle = Colors.grey;
