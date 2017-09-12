@@ -4,7 +4,7 @@ function GameLoop (options) {
   this.eleapsedTime = 0;
   this.updatePipeline = options.updatePipeline;
   this.renderPipeline = options.renderPipeline;
-  this.updateFixedRate = 100;
+  this.updateFixedRate = 30;
 }
 
 GameLoop.prototype.tick = function (timestamp) {

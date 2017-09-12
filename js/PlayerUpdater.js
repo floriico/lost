@@ -25,8 +25,8 @@ PlayerUpdater.prototype.update = function (deltaTime) {
   } else {
     this.player.velocityX = 0;
   }
-  destX = this.player.x + this.player.velocityX * 8;
-  destY = this.player.y + this.player.velocityY * 8;
+  destX = this.player.x + this.player.velocityX * 0.1 * deltaTime;
+  destY = this.player.y + this.player.velocityY * 0.1 * deltaTime;
   if (this.validateMove(destX, destY)) {
     this.player.x = destX;
     this.player.y = destY;
